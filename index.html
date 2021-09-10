@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .health-bar {
+        background: green;
+        height: 20px;
+    }
+</style>
+<body>
+
+    <div id="app">
+
+        <div>monster Health</div>
+        <div class="health-bar" :style="{width: getMonsterHealth}"></div>
+        <div>your health</div>
+        <div class="health-bar" :style="{width: getUserHealth}">  </div>
+
+
+        <!-- controlls -->
+        <div v-if="gameConf.winner === ''">
+            <button @click="onAttack" :disabled="!isYourTurn">attact</button>
+            <button @click="onSpecialAttack" :disabled="!isSpecialAttackEnable || !isYourTurn">special attact</button>
+            <button @click="onHeal" :disabled="!isYourTurn">heal</button>
+            <button @click="onSurrender" :disabled="!isYourTurn">surender</button>
+        </div>
+
+        <!-- winner board -->
+        <div v-if="gameConf.winner !== ''">
+            <h3>Game Over</h3>
+            winner is {{ gameConf.winner }}
+            <button @click="resteGame"> Play Again.  </button>
+        </div>
+
+        <!-- game Log -->
+        <div>
+            <ul>
+                <li v-for="(log, i) in gameLog" :key="i">
+                {{ log.who }} {{ log.event }} {{ log.whom }} {{ log.by  }}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    
+</body>
+
+<script src="https://unpkg.com/vue@next"></script>
+<script src="./index.js"></script>
+</html>
